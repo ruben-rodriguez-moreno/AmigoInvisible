@@ -5,30 +5,46 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.key.key
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.firebase.Firebase
-import kotlinx.coroutines.delay
-import kotlin.collections.isNotEmpty
-import kotlin.collections.mapNotNull
-import kotlin.collections.random
-import kotlin.collections.remove
-import kotlin.collections.toMutableList
+import kotlin.collections.List
+import kotlin.collections.emptySet
+import kotlin.collections.filter
+import kotlin.collections.forEachIndexed
+import kotlin.collections.listOf
+import kotlin.collections.plus
+import kotlin.collections.randomOrNull
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,7 +113,19 @@ fun StartScreen(onStartClick: () -> Unit) {
 }
 
 data class SecretSantaState(
-    val participants: List<String> = listOf("Susana" , "Estrelli", "Pepi", "Nati", "Lucy" , "Inma" , "Elena" , "Pilar" , "Mari Carmen" , "Isabel" , "Palmy"),
+    val participants: List<String> = listOf(
+        "Susana",
+        "Estrelli",
+        "Pepi",
+        "Nati",
+        "Lucy",
+        "Inma",
+        "Elena",
+        "Pilar",
+        "Mari Carmen",
+        "Isabel",
+        "Palmy"
+    ),
     val currentUser: String = "", // Replace with actual current user
     val secretSanta: String? = null,
     val isRotating: Boolean = false
@@ -192,7 +220,8 @@ fun SecretSantaApp() {
                     if (drawnParticipants.size < state.participants.size) {
                         var secretSanta: String?
                         do {
-                            secretSanta = logic.selectSecretSanta(state.currentUser, state.participants)
+                            secretSanta =
+                                logic.selectSecretSanta(state.currentUser, state.participants)
                         } while (secretSanta != null && secretSanta in drawnParticipants)
 
                         if (secretSanta != null) {
@@ -200,7 +229,8 @@ fun SecretSantaApp() {
                             drawnParticipants = drawnParticipants + secretSanta
                         }
                     } else {
-                        state = state.copy(secretSanta = "Todos los participantes han sido sorteados")
+                        state =
+                            state.copy(secretSanta = "Todos los participantes han sido sorteados")
                     }
                     showResult = true // Show the result after drawing
                 },
@@ -219,11 +249,13 @@ fun SecretSantaApp() {
                         // Move to the next participant (if any)
                         if (selectedParticipantIndex < state.participants.size - 1) {
                             selectedParticipantIndex++
-                            state = state.copy(currentUser = state.participants[selectedParticipantIndex])
+                            state =
+                                state.copy(currentUser = state.participants[selectedParticipantIndex])
                         } else {
                             // All participants have drawn, reset to the beginning
                             selectedParticipantIndex = 0
-                            state = state.copy(currentUser = state.participants[selectedParticipantIndex])
+                            state =
+                                state.copy(currentUser = state.participants[selectedParticipantIndex])
                             drawnParticipants = emptySet() // Reset drawn participants
                         }
                     }
