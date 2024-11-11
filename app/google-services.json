@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "238348166055",
+    "project_id": "amigoinvisible-bffcc",
+    "storage_bucket": "amigoinvisible-bffcc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238348166055:android:03def45c8d37f337ebcc82",
+        "android_client_info": {
+          "package_name": "com.example.amigoinvisible"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNJHL4NQS4HzXIh60y1jrTHC_2dLtPspw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
